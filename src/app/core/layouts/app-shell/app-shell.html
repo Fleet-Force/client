@@ -1,12 +1,217 @@
 <a class="skip-link" href="#main-content">Ir para o conteúdo</a>
-<header>
-  <a class="brand" routerLink="/import">Fleet Force</a>
-  <nav aria-label="Navegação principal">
-    <a routerLink="/import" routerLinkActive="active" ariaCurrentWhenActive="page">Importar frota</a
-    ><a routerLink="/analysis" routerLinkActive="active" ariaCurrentWhenActive="page"
-      >Diagnóstico</a
+<div class="application" [class.collapsed]="collapsed()">
+  <aside aria-label="Navegação Fleet Force">
+    <div class="brand-area">
+      <a routerLink="/import" class="brand"
+        ><img
+          [ngSrc]="
+            collapsed() ? '/assets/brand/symbol-reverse.svg' : '/assets/brand/logo-reverse.svg'
+          "
+          [width]="collapsed() ? 52 : 144"
+          [height]="collapsed() ? 41 : 91"
+          alt="Fleet Force"
+          priority
+      /></a>
+    </div>
+    <button
+      class="collapse secondary"
+      (click)="collapsed.set(!collapsed())"
+      [attr.aria-expanded]="!collapsed()"
+      aria-label="Alternar navegação"
     >
-  </nav>
-</header>
-<main #content id="main-content" tabindex="-1"><router-outlet (activate)="content.focus()" /></main>
-<footer>Fleet Force · Diagnóstico operacional da frota</footer>
+      <svg
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        aria-hidden="true"
+      >
+        <path d="M4 4h16v16H4zM9 4v16" /></svg
+      ><span>Navegação</span>
+    </button>
+    <nav aria-label="Navegação principal">
+      <a
+        routerLink="/import"
+        [class.active]="active() === 'import'"
+        [attr.aria-current]="active() === 'import' ? 'page' : null"
+        title="Importar frota"
+        ><svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          aria-hidden="true"
+        >
+          <path d="M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4" /></svg
+        ><span>Importar frota</span></a
+      >
+      <p class="nav-label">OPERAÇÃO</p>
+      <a
+        routerLink="/analysis"
+        [queryParams]="{ section: 'overview' }"
+        [class.active]="active() === 'overview'"
+        [attr.aria-current]="active() === 'overview' ? 'page' : null"
+        title="Visão geral"
+        ><svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          aria-hidden="true"
+        >
+          <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" /></svg
+        ><span>Visão geral</span></a
+      ><a
+        routerLink="/analysis"
+        [queryParams]="{ section: 'fleet' }"
+        [class.active]="active() === 'fleet'"
+        [attr.aria-current]="active() === 'fleet' ? 'page' : null"
+        title="Frota"
+        ><svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          aria-hidden="true"
+        >
+          <path d="M3 7h12l4 6v5H3zM3 12h16M6 18v3m10-3v3" /></svg
+        ><span>Frota</span></a
+      ><a
+        routerLink="/analysis"
+        [queryParams]="{ section: 'priorities' }"
+        [class.active]="active() === 'priorities'"
+        [attr.aria-current]="active() === 'priorities' ? 'page' : null"
+        title="Prioridades"
+        ><svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          aria-hidden="true"
+        >
+          <path d="M12 3 2 21h20zM12 9v5m0 3v1" /></svg
+        ><span>Prioridades</span></a
+      ><a
+        routerLink="/analysis"
+        [queryParams]="{ section: 'costs' }"
+        [class.active]="active() === 'costs'"
+        [attr.aria-current]="active() === 'costs' ? 'page' : null"
+        title="Custos"
+        ><svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          aria-hidden="true"
+        >
+          <path d="M3 20h18M6 16v-5m6 5V7m6 9V3" /></svg
+        ><span>Custos</span></a
+      ><a
+        routerLink="/analysis"
+        [queryParams]="{ section: 'quality' }"
+        [class.active]="active() === 'quality'"
+        [attr.aria-current]="active() === 'quality' ? 'page' : null"
+        title="Qualidade"
+        ><svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          aria-hidden="true"
+        >
+          <path d="m4 12 5 5L20 5M3 3h9" /></svg
+        ><span>Qualidade</span></a
+      ><a
+        routerLink="/analysis"
+        [queryParams]="{ section: 'comparisons' }"
+        [class.active]="active() === 'comparisons'"
+        [attr.aria-current]="active() === 'comparisons' ? 'page' : null"
+        title="Comparações"
+        ><svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          aria-hidden="true"
+        >
+          <path d="M4 18V6m0 12h16M8 14l4-4 4 2 4-7" /></svg
+        ><span>Comparações</span></a
+      >
+      <p class="nav-label">ANÁLISE</p>
+      <a
+        routerLink="/analysis"
+        [queryParams]="{ section: 'references' }"
+        [class.active]="active() === 'references'"
+        [attr.aria-current]="active() === 'references' ? 'page' : null"
+        title="Referências e metodologia"
+        ><svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          aria-hidden="true"
+        >
+          <path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5" /></svg
+        ><span>Referências e metodologia</span></a
+      >
+    </nav>
+  </aside>
+  <div class="workspace">
+    <header>
+      <div>
+        <span class="context-label">FROTA / WORKSPACE</span><strong>{{ title() }}</strong>
+      </div>
+      <a class="button secondary" routerLink="/import"
+        >Nova análise
+        <svg
+          class="action-arrow"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          aria-hidden="true"
+        >
+          <path d="M5 19 19 5M5 5h14v14" /></svg
+      ></a>
+    </header>
+    <main #content id="main-content" [class.reverse-navigation]="reverse()" tabindex="-1">
+      <router-outlet (activate)="content.focus()" />
+    </main>
+  </div>
+</div>

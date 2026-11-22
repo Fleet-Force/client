@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -12,7 +12,8 @@ import { formatValue } from '../../../../shared/utils/presentation';
   styleUrl: './fleet-vehicle-detail-page.scss',
 })
 export class FleetVehicleDetailPage {
-  readonly store = inject(FleetAnalysisStoreService);
+  readonly activeGroup = signal(0);
+ readonly store = inject(FleetAnalysisStoreService);
   private readonly route = inject(ActivatedRoute);
   private readonly params = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,

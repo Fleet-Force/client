@@ -1,6 +1,6 @@
 <h1>Diagnóstico da frota</h1>
 @if (store.analysis(); as analysis) {
-  <section>
+  @if (section() === 'references') {<section>
     <h2>Identificação da análise</h2>
     <dl>
       <dt>Arquivo</dt>
@@ -26,9 +26,12 @@
       são estimados a partir da distância e eficiência reportada.
     </p>
   </section>
-  <app-fleet-summary [summary]="analysis.summary" /><app-fleet-vehicles-table
+  }
+@if (section() === 'overview') {<app-fleet-summary [summary]="analysis.summary" /><details><summary>Todos os indicadores retornados</summary><dl>@for (item of summaryDetails(); track item.label) {<dt>{{ item.label }}</dt><dd>{{ item.value }}</dd>}</dl></details>}
+@if (section() === 'fleet') {<app-fleet-vehicles-table
     [vehicles]="analysis.vehicles"
-  /><app-fleet-diagnostics-section [analysis]="analysis" />
+  />}
+<app-fleet-diagnostics-section [section]="section()" [analysis]="analysis" />
 } @else {
   <p>
     Não há análise disponível na memória. Se você atualizou o navegador, importe o CSV novamente.

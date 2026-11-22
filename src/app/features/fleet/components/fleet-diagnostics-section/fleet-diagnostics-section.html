@@ -1,13 +1,13 @@
 @if (analysis(); as a) {
-  <section>
+  @if (section() === 'costs') {<section>
     <h2>Categorias</h2>
     <app-data-table
       caption="Resumo por categoria"
       [rows]="a.categories"
       [columns]="categoryColumns"
     />
-  </section>
-  <section>
+  </section>}
+  @if (section() === 'priorities') {<section>
     <h2>Prioridades operacionais</h2>
     <p>
       Diferenças de consumo são estimativas. Ausência de pares elegíveis não comprova eficiência
@@ -22,8 +22,8 @@
       [columns]="priorityColumns"
       [vehicleLinks]="true"
     />
-  </section>
-  <section>
+  </section>}
+  @if (section() === 'quality') {<section>
     <h2>Qualidade dos dados</h2>
     <app-data-table
       caption="Veículos que requerem revisão"
@@ -44,8 +44,8 @@
       [rows]="coverage()"
       [columns]="coverageColumns"
     />
-  </section>
-  <section>
+  </section>}
+  @if (section() === 'costs') {<section>
     <h2>Análise financeira</h2>
     <h3>Distribuição das despesas</h3>
     <app-data-table
@@ -70,8 +70,8 @@
       [rows]="a.financial.fuel_scenarios"
       [columns]="scenarioColumns"
     />
-  </section>
-  <section>
+  </section>}
+  @if (section() === 'comparisons') {<section>
     <h2>Comparações</h2>
     <h3>Pares internos</h3>
     <p>
@@ -94,8 +94,8 @@
       [columns]="publicColumns"
       [vehicleLinks]="true"
     />
-  </section>
-  <section>
+  </section>}
+  @if (section() === 'references') {<section>
     <h2>Referências históricas</h2>
     @if (!a.metadata.availability.anp) {
       <p>Dados ANP indisponíveis nesta análise. Não há preços de referência a assumir.</p>
@@ -108,8 +108,8 @@
       [rows]="a.reference_prices"
       [columns]="priceColumns"
     />
-  </section>
-  <section>
+  </section>}
+  @if (section() === 'references') {<section>
     <h2>Machine learning</h2>
     <dl>
       <dt>ML habilitado</dt>
@@ -158,9 +158,9 @@
     } @else {
       <p>Sem projeções de preços.</p>
     }
-  </section>
-  <details>
+  </section>}
+  @if (section() === 'references') {<details>
     <summary>Detalhes técnicos e metadados adicionais</summary>
     <pre>{{ a.metadata | json }}</pre>
-  </details>
+  </details>}
 }

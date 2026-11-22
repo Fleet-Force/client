@@ -10,7 +10,8 @@ import { DataTable } from '../../../../shared/components/data-table/data-table';
   styleUrl: './fleet-diagnostics-section.scss',
 })
 export class FleetDiagnosticsSection {
-  readonly analysis = input<FleetAnalysis | null>(null);
+  readonly section = input("overview");
+ readonly analysis = input<FleetAnalysis | null>(null);
   readonly coverage = computed(() =>
     Object.entries(this.analysis()?.quality.coverage ?? {}).map(([field, value]) => ({
       field: labels[field] ?? field,

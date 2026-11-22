@@ -1,0 +1,1 @@
+table{table-layout:fixed}td,th{min-width:0;font-size:12px;padding:10px 8px}.table-scroll{overflow:visible} @media(max-width:900px){thead{display:none}table,tbody,tr,td{display:block}tr{border:1px solid #e5e5e5;border-radius:8px;padding:8px;margin-bottom:12px}td{display:flex;justify-content:space-between;gap:16px;border:0}td:before{content:attr(data-label);font-weight:600}}

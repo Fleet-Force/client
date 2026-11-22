@@ -9,7 +9,8 @@
     Consumo e diferenças em litros são estimados. Referências PBEV são exploratórias. Uma comparação
     indisponível não indica operação eficiente.
   </p>
-  @for (group of groups(); track group.title) {
+  <nav class="view-tabs" aria-label="Detalhes do veículo">@for (group of groups(); track group.title; let index = $index) {<button [class.selected]="activeGroup() === index" (click)="activeGroup.set(index)">{{ group.title }}</button>}</nav>
+@for (group of groups(); track group.title; let index = $index) {@if (activeGroup() === index) {
     <section>
       <h3>{{ group.title }}</h3>
       <dl class="metrics">
@@ -20,7 +21,7 @@
           </div>
         }
       </dl>
-    </section>
+    </section>}
   }
   <details>
     <summary>Todos os atributos técnicos retornados para o veículo</summary>

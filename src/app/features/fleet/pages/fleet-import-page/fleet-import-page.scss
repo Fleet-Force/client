@@ -1,0 +1,204 @@
+:host {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.import-heading {
+  margin: 8px 0 28px;
+}
+.import-heading h1 {
+  margin: 8px 0 10px;
+}
+.import-heading > p {
+  color: #667085;
+  margin: 0;
+}
+.import-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.import-primary {
+  margin: 0;
+  padding: 24px;
+  border: 1px solid #dce3ef;
+  border-top: 3px solid #0750ed;
+}
+.panel-heading h2 {
+  margin: 6px 0 20px;
+  font-size: 19px;
+}
+form {
+  padding: 0;
+  border: 0;
+  max-width: none;
+}
+.file-picker {
+  position: relative;
+  border: 1px dashed #89aaf1;
+  background: #f6f9ff;
+  border-radius: 6px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 24px;
+  transition:
+    border-color 0.16s,
+    background 0.16s;
+}
+.file-picker:hover,
+.file-picker:focus-within {
+  border-color: #0750ed;
+  background: #eef4ff;
+}
+.file-picker:focus-within {
+  outline: 3px solid #0750ed;
+  outline-offset: 3px;
+}
+.file-picker label {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 400;
+  color: #667085;
+  font-size: 13px;
+}
+.file-picker label strong {
+  font-weight: 600;
+  font-size: 16px;
+  color: #0750ed;
+}
+.file-icon {
+  color: #0750ed;
+  margin-bottom: 4px;
+}
+.file-icon svg {
+  width: 28px;
+  height: 28px;
+}
+input[type='file'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+}
+#file-feedback {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  margin: 12px 0 0;
+  color: #475467;
+}
+select {
+  width: 100%;
+  margin-bottom: 20px;
+}
+form > button {
+  width: 100%;
+  height: 44px;
+}
+.memory-notice {
+  font-size: 12px;
+  color: #667085;
+  border-left: 2px solid #cbd8f5;
+  padding-left: 12px;
+  margin: 8px 0 0;
+}
+.loading-status {
+  font-size: 13px;
+  color: #053db8;
+  margin: 8px 0;
+}
+.loading-status:empty {
+  display: none;
+}
+.import-guide {
+  border: 1px solid #dce3ef;
+  border-radius: 6px;
+  overflow: hidden;
+  background: white;
+}
+.guide-header {
+  padding: 24px;
+  background: #0750ed;
+  color: white;
+  border-top-right-radius: 6px;
+}
+.guide-header .eyebrow {
+  color: #fff;
+}
+.guide-header h2 {
+  font-size: 26px;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 16px 0;
+}
+.guide-header p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  color: #fff;
+}
+.workflow {
+  list-style: none;
+  padding: 24px;
+  margin: 0;
+  display: grid;
+  gap: 20px;
+}
+.workflow li {
+  display: flex;
+  gap: 16px;
+}
+.workflow li > span {
+  color: #0750ed;
+  font-size: 12px;
+  font-weight: 600;
+  border-bottom: 2px solid #0750ed;
+  align-self: start;
+  padding: 3px 0;
+}
+.workflow strong {
+  font-size: 14px;
+}
+.workflow p {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #667085;
+  margin: 4px 0 0;
+}
+#csv-help {
+  margin: 0 24px 24px;
+  padding: 12px;
+  background: white;
+  border: 1px solid #dce3ef;
+}
+#csv-help p {
+  font-size: 13px;
+}
+#csv-help pre {
+  font-size: 11px;
+}
+@media (max-width: 1000px) {
+  .import-grid {
+    gap: 16px;
+  }
+  .import-primary,
+  .guide-header {
+    padding: 20px;
+  }
+  .workflow {
+    padding: 20px;
+    gap: 16px;
+  }
+}
+@media (max-width: 760px) {
+  .import-grid {
+    grid-template-columns: 1fr;
+  }
+  .import-heading h1 {
+    font-size: 26px;
+  }
+}
