@@ -6,7 +6,7 @@ import { FleetAnalysis } from '../models/fleet-analysis';
 @Service()
 export class FleetAnalysisApiService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = API_CONFIG.fleetBaseUrl;
+  private readonly baseUrl = API_CONFIG.apiBaseUrl + '/fleet';
   analyze(file: File, uf: string): Observable<FleetAnalysis> {
     const body = new FormData();
     body.append('file', file, file.name);

@@ -32,10 +32,15 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {
+              "define": {
+                "API_URL": "'https://fleet-force-api.joaopdias.dev'"
+              },
               "budgets": [
                 {
                   "type": "initial",
@@ -51,6 +56,9 @@
               "outputHashing": "all"
             },
             "development": {
+              "define": {
+                "API_URL": "'http://localhost:8000'"
+              },
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -68,10 +76,7 @@
               "buildTarget": "fleet-force:build:development"
             }
           },
-          "defaultConfiguration": "development",
-          "options": {
-            "proxyConfig": "src/proxy.conf.json"
-          }
+          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular/build:unit-test"
