@@ -1,0 +1,78 @@
+<h1>Importar frota</h1>
+<p>
+  Envie um CSV para analisar custos, qualidade dos dados e prioridades operacionais da sua frota.
+</p>
+<p>
+  Os resultados ficam somente na memória desta página. Após atualizar o navegador, importe o CSV
+  novamente.
+</p>
+<form (submit)="submit($event)" [attr.aria-busy]="store.loading()">
+  <label for="fleet-file">Arquivo CSV (até 10 MiB)</label>
+  <input
+    id="fleet-file"
+    type="file"
+    accept=".csv,text/csv"
+    (change)="selectFile($event)"
+    [disabled]="store.loading()"
+    aria-describedby="csv-help file-feedback"
+    [attr.aria-invalid]="validation() ? true : null"
+  />
+  <p id="file-feedback" aria-live="polite">
+    @if (file(); as selected) {
+      {{ selected.name }} · {{ format(selected.size / 1024) }} KiB
+    } @else {
+      Nenhum arquivo válido selecionado.
+    }
+  </p>
+  <label for="uf">UF de referência histórica de preços</label>
+  <select
+    #stateSelect
+    id="uf"
+    [value]="uf()"
+    (change)="uf.set(stateSelect.value)"
+    [disabled]="store.loading()"
+  >
+    @for (state of states; track state) {
+      <option [value]="state">{{ state }}</option>
+    }
+  </select>
+  @if (validation()) {
+    <p class="error" role="alert">{{ validation() }}</p>
+  }
+  @if (store.error(); as error) {
+    <div class="error" role="alert">
+      <p>{{ error.message }}</p>
+      @for (detail of errorDetails(error); track detail) {
+        <p>{{ detail }}</p>
+      }
+      <p>Código: {{ error.code }} · HTTP {{ error.status }}</p>
+    </div>
+  }
+  <button type="submit" [disabled]="store.loading()">
+    {{ store.loading() ? 'Analisando…' : 'Analisar CSV' }}
+  </button>
+  <p role="status">
+    @if (store.loading()) {
+      Aguarde a conclusão da análise.
+    }
+  </p>
+</form>
+<section id="csv-help">
+  <h2>Preparar o CSV</h2>
+  <p>
+    Use UTF-8, com ou sem BOM, e vírgula ou ponto e vírgula como separador. Cabeçalhos normalizados
+    ou do relatório UFMG são aceitos, sem renomeação manual.
+  </p>
+  <p>
+    Colunas mínimas: <code>fleet_id,model,km</code> (UFMG: <code>Frota,modelo,Km Percorrido</code>).
+    Preserve os zeros iniciais dos identificadores.
+  </p>
+  <pre>
+fleet_id,model,km,kmpl,total_expense
+001,ONIX 1.0,2000,10,1000
+002,HILUX,3500,9,2500</pre>
+  <p>
+    Eficiência e despesas são opcionais. Dados ausentes aparecem como “Não informado”. A validação
+    completa é realizada pelo servidor.
+  </p>
+</section>

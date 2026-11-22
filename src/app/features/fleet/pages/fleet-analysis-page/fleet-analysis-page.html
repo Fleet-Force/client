@@ -1,0 +1,37 @@
+<h1>Diagnóstico da frota</h1>
+@if (store.analysis(); as analysis) {
+  <section>
+    <h2>Identificação da análise</h2>
+    <dl>
+      <dt>Arquivo</dt>
+      <dd>{{ store.selectedFileName() }}</dd>
+      <dt>ID da análise</dt>
+      <dd>{{ analysis.analysis_id }}</dd>
+      <dt>Situação</dt>
+      <dd>{{ analysis.status === 'completed' ? 'Concluída' : analysis.status }}</dd>
+      <dt>Formato de origem</dt>
+      <dd>{{ analysis.metadata.input_format }}</dd>
+      <dt>UF de referência</dt>
+      <dd>{{ analysis.metadata.price_reference_state }}</dd>
+      <dt>Moeda</dt>
+      <dd>{{ analysis.metadata.currency }}</dd>
+      <dt>Bases disponíveis</dt>
+      <dd>
+        ANP: {{ analysis.metadata.availability.anp ? 'Disponível' : 'Indisponível' }} · PBEV:
+        {{ analysis.metadata.availability.pbev_catalog ? 'Disponível' : 'Indisponível' }}
+      </dd>
+    </dl>
+    <p>
+      O período é o fornecido pelo CSV; não são inferidas médias mensais ou projeções anuais. Litros
+      são estimados a partir da distância e eficiência reportada.
+    </p>
+  </section>
+  <app-fleet-summary [summary]="analysis.summary" /><app-fleet-vehicles-table
+    [vehicles]="analysis.vehicles"
+  /><app-fleet-diagnostics-section [analysis]="analysis" />
+} @else {
+  <p>
+    Não há análise disponível na memória. Se você atualizou o navegador, importe o CSV novamente.
+  </p>
+  <a routerLink="/import">Importar CSV</a>
+}

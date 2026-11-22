@@ -1,0 +1,166 @@
+@if (analysis(); as a) {
+  <section>
+    <h2>Categorias</h2>
+    <app-data-table
+      caption="Resumo por categoria"
+      [rows]="a.categories"
+      [columns]="categoryColumns"
+    />
+  </section>
+  <section>
+    <h2>Prioridades operacionais</h2>
+    <p>
+      Diferenças de consumo são estimativas. Ausência de pares elegíveis não comprova eficiência
+      operacional.
+    </p>
+    @if (!a.priorities.length) {
+      <p>Nenhuma prioridade operacional foi identificada pelo motor.</p>
+    }
+    <app-data-table
+      caption="Prioridades retornadas pela análise"
+      [rows]="a.priorities"
+      [columns]="priorityColumns"
+      [vehicleLinks]="true"
+    />
+  </section>
+  <section>
+    <h2>Qualidade dos dados</h2>
+    <app-data-table
+      caption="Veículos que requerem revisão"
+      [rows]="a.quality.issues"
+      [columns]="issueColumns"
+      [vehicleLinks]="true"
+    />
+    <h3>Duplicidades para confirmação</h3>
+    <p>Confirme os registros sinalizados antes de interpretar os indicadores desses veículos.</p>
+    <app-data-table
+      caption="Registros duplicados"
+      [rows]="a.quality.duplicates"
+      [columns]="duplicateColumns()"
+    />
+    <h3>Cobertura dos campos</h3>
+    <app-data-table
+      caption="Valores disponíveis e total de veículos"
+      [rows]="coverage()"
+      [columns]="coverageColumns"
+    />
+  </section>
+  <section>
+    <h2>Análise financeira</h2>
+    <h3>Distribuição das despesas</h3>
+    <app-data-table
+      caption="Rubricas e disponibilidade"
+      [rows]="a.financial.expense_distribution"
+      [columns]="distributionColumns"
+    />
+    <h3>Concentração de custos (Pareto)</h3>
+    <app-data-table
+      caption="Participação nos custos da frota"
+      [rows]="a.financial.pareto"
+      [columns]="paretoColumns"
+      [vehicleLinks]="true"
+    />
+    <h3>Cenários de preços de combustível</h3>
+    <p>
+      Cenários hipotéticos com preços históricos ANP. Os combustíveis representam alternativas e não
+      devem ser somados. Os valores não representam economia realizada.
+    </p>
+    <app-data-table
+      caption="Cenários alternativos de combustível"
+      [rows]="a.financial.fuel_scenarios"
+      [columns]="scenarioColumns"
+    />
+  </section>
+  <section>
+    <h2>Comparações</h2>
+    <h3>Pares internos</h3>
+    <p>
+      A referência utiliza outros veículos elegíveis do mesmo modelo normalizado e exclui o veículo
+      avaliado.
+    </p>
+    <app-data-table
+      caption="Grupos de comparação interna"
+      [rows]="a.comparisons.internal"
+      [columns]="peerColumns"
+    />
+    <h3>Referências públicas PBEV</h3>
+    <p>
+      Comparação exploratória por nome: não confirma versão, ano ou configuração de combustível do
+      veículo.
+    </p>
+    <app-data-table
+      caption="Associações exploratórias PBEV"
+      [rows]="a.comparisons.public_references"
+      [columns]="publicColumns"
+      [vehicleLinks]="true"
+    />
+  </section>
+  <section>
+    <h2>Referências históricas</h2>
+    @if (!a.metadata.availability.anp) {
+      <p>Dados ANP indisponíveis nesta análise. Não há preços de referência a assumir.</p>
+    }
+    @if (!a.metadata.availability.pbev_catalog) {
+      <p>Catálogo PBEV indisponível nesta análise.</p>
+    }
+    <app-data-table
+      caption="Observações históricas ANP (não são preços ao vivo)"
+      [rows]="a.reference_prices"
+      [columns]="priceColumns"
+    />
+  </section>
+  <section>
+    <h2>Machine learning</h2>
+    <dl>
+      <dt>ML habilitado</dt>
+      <dd>{{ a.ml.enabled ? 'Sim' : 'Não' }}</dd>
+      <dt>Situação operacional</dt>
+      <dd>{{ a.ml.status }}</dd>
+      <dt>Motivo informado pela API</dt>
+      <dd>{{ a.ml.reason || 'Não informado' }}</dd>
+      <dt>Uso em alertas operacionais</dt>
+      <dd>{{ a.ml.used_for_operational_alerts ? 'Sim' : 'Não' }}</dd>
+    </dl>
+    @if (a.ml.status === 'deterministic_fallback') {
+      <p>
+        A análise utiliza a referência determinística. Não há modelo ML operacional validado
+        carregado. O upload não treina modelos.
+      </p>
+    }
+    <h3>Validação dos modelos</h3>
+    <app-data-table
+      caption="Estado de validação dos modelos"
+      [rows]="modelRows()"
+      [columns]="validationColumns"
+    />
+    <h3>Resultados experimentais</h3>
+    @if (a.ml.crossval_predictions.length) {
+      <details>
+        <summary>Predições de validação cruzada retornadas</summary>
+        <pre>{{ a.ml.crossval_predictions | json }}</pre>
+      </details>
+    } @else {
+      <p>Sem predições de validação cruzada.</p>
+    }
+    @if (a.ml.price_backtest.length) {
+      <details>
+        <summary>Resultados de backtest retornados</summary>
+        <pre>{{ a.ml.price_backtest | json }}</pre>
+      </details>
+    } @else {
+      <p>Sem resultados de backtest de preços.</p>
+    }
+    @if (a.ml.price_forecast.length) {
+      <details>
+        <summary>Projeções de preços retornadas</summary>
+        <pre>{{ a.ml.price_forecast | json }}</pre>
+      </details>
+    } @else {
+      <p>Sem projeções de preços.</p>
+    }
+  </section>
+  <details>
+    <summary>Detalhes técnicos e metadados adicionais</summary>
+    <pre>{{ a.metadata | json }}</pre>
+  </details>
+}

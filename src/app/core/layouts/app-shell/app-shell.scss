@@ -1,0 +1,42 @@
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 3rem;
+  border-bottom: 1px solid #d1d5db;
+  padding: 1.25rem max(1rem, calc((100% - 1200px) / 2));
+}
+nav {
+  display: flex;
+  gap: 1.5rem;
+}
+.brand {
+  font-size: 1.3rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+.active {
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+}
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1.5rem 1rem 3rem;
+}
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  border-top: 1px solid #d1d5db;
+}
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  padding: 1rem;
+  background: white;
+  z-index: 1;
+}
+.skip-link:focus {
+  top: 0;
+}

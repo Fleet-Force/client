@@ -1,0 +1,39 @@
+<section aria-labelledby="vehicles-heading">
+  <h2 id="vehicles-heading">Veículos</h2>
+  <div class="filters">
+    <label for="vehicle-search"
+      >Frota ou modelo<input
+        #search
+        id="vehicle-search"
+        type="search"
+        [value]="query()"
+        (input)="query.set(search.value)"
+    /></label>
+    <label for="category"
+      >Categoria<select
+        #categoriesSelect
+        id="category"
+        (change)="category.set(categoriesSelect.value)"
+      >
+        <option value="">Todas</option>
+        @for (item of categories(); track item) {
+          <option [value]="item">{{ item }}</option>
+        }
+      </select></label
+    >
+    <label
+      ><input #priority type="checkbox" (change)="priorityOnly.set(priority.checked)" /> Somente
+      prioridades</label
+    ><label
+      ><input #review type="checkbox" (change)="reviewOnly.set(review.checked)" /> Requer
+      revisão</label
+    >
+  </div>
+  <p aria-live="polite">{{ filtered().length }} veículos encontrados.</p>
+  <app-data-table
+    caption="Veículos da frota"
+    [rows]="filtered()"
+    [columns]="tableColumns"
+    [vehicleLinks]="true"
+  />
+</section>

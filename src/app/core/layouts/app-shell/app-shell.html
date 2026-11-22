@@ -1,0 +1,12 @@
+<a class="skip-link" href="#main-content">Ir para o conteúdo</a>
+<header>
+  <a class="brand" routerLink="/import">Fleet Force</a>
+  <nav aria-label="Navegação principal">
+    <a routerLink="/import" routerLinkActive="active" ariaCurrentWhenActive="page">Importar frota</a
+    ><a routerLink="/analysis" routerLinkActive="active" ariaCurrentWhenActive="page"
+      >Diagnóstico</a
+    >
+  </nav>
+</header>
+<main #content id="main-content" tabindex="-1"><router-outlet (activate)="content.focus()" /></main>
+<footer>Fleet Force · Diagnóstico operacional da frota</footer>

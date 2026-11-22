@@ -1,0 +1,48 @@
+@if (rows().length) {
+  <div class="table-scroll" role="region" [attr.aria-label]="caption()" tabindex="0">
+    <table>
+      <caption>
+        {{
+          caption()
+        }}
+      </caption>
+      <thead>
+        <tr>
+          @for (column of columns(); track column.key) {
+            <th scope="col">{{ column.label }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of visibleRows(); track $index) {
+          <tr>
+            @for (column of columns(); track column.key) {
+              <td>
+                @if (vehicleLinks() && column.key === 'fleet_id') {
+                  <a [routerLink]="['/analysis/vehicles', row[column.key]]">{{
+                    format(row[column.key])
+                  }}</a>
+                } @else {
+                  {{ format(row[column.key], column.format, column.valueLabels) }}
+                }
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (pages() > 1) {
+    <nav class="pagination" [attr.aria-label]="'Paginação: ' + caption()">
+      <button type="button" [disabled]="page() === 0" (click)="page.set(page() - 1)">
+        Anterior</button
+      ><span aria-live="polite"
+        >Página {{ page() + 1 }} de {{ pages() }} · {{ rows().length }} registros</span
+      ><button type="button" [disabled]="page() + 1 >= pages()" (click)="page.set(page() + 1)">
+        Próxima
+      </button>
+    </nav>
+  }
+} @else {
+  <p>Nenhum registro disponível.</p>
+}

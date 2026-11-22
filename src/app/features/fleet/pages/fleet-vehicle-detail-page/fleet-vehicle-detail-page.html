@@ -1,0 +1,32 @@
+<h1>Detalhes do veículo</h1>
+@if (!store.hasAnalysis()) {
+  <p>A análise não está mais disponível na memória. Importe seu CSV novamente.</p>
+  <a routerLink="/import">Importar CSV</a>
+} @else if (vehicle(); as v) {
+  <p><a routerLink="/analysis">Voltar ao diagnóstico da frota</a></p>
+  <h2>{{ v.fleet_id }} · {{ v.model }}</h2>
+  <p>
+    Consumo e diferenças em litros são estimados. Referências PBEV são exploratórias. Uma comparação
+    indisponível não indica operação eficiente.
+  </p>
+  @for (group of groups(); track group.title) {
+    <section>
+      <h3>{{ group.title }}</h3>
+      <dl class="metrics">
+        @for (field of group.fields; track field.key) {
+          <div>
+            <dt>{{ field.label }}</dt>
+            <dd>{{ format(field.value, field.format, field.valueLabels) }}</dd>
+          </div>
+        }
+      </dl>
+    </section>
+  }
+  <details>
+    <summary>Todos os atributos técnicos retornados para o veículo</summary>
+    <pre>{{ v | json }}</pre>
+  </details>
+} @else {
+  <p>Veículo não encontrado nesta análise.</p>
+  <a routerLink="/analysis">Voltar ao diagnóstico da frota</a>
+}

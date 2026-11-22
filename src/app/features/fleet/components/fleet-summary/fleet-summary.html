@@ -1,0 +1,11 @@
+<section aria-labelledby="overview-heading">
+  <h2 id="overview-heading">Visão geral da frota</h2>
+  <dl class="metrics">
+    @for (indicator of indicators(); track indicator.key) {
+      <div>
+        <dt>{{ indicator.label }}</dt>
+        <dd>{{ format(indicator.value, indicator.format) }}</dd>
+      </div>
+    }
+  </dl>
+</section>
