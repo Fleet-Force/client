@@ -1,3 +1,4 @@
+import { FleetAnalysisStoreService } from '../../../features/fleet/state/fleet-analysis-store.service';
 import { Component, signal, inject, computed } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { filter, map } from 'rxjs';
@@ -10,9 +11,16 @@ import { NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/rout
   styleUrl: './app-shell.scss',
 })
 export class AppShell {
+  readonly hasDiagnosis = inject(FleetAnalysisStoreService).hasAnalysis;
   readonly router = inject(Router);
-  readonly reverse = toSignal(this.router.events.pipe(filter((event): event is NavigationStart => event instanceof NavigationStart), map(event => event.navigationTrigger === 'popstate')), {initialValue:false});
- readonly navigation = toSignal(this.router.events);
+  readonly reverse = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationStart => event instanceof NavigationStart),
+      map((event) => event.navigationTrigger === 'popstate'),
+    ),
+    { initialValue: false },
+  );
+  readonly navigation = toSignal(this.router.events);
   readonly active = computed(() => {
     this.navigation();
     const tree = this.router.parseUrl(this.router.url);
@@ -33,6 +41,5 @@ export class AppShell {
     { id: 'costs', label: 'Custos' },
     { id: 'quality', label: 'Qualidade' },
     { id: 'comparisons', label: 'Comparações' },
-    { id: 'references', label: 'Referências e metodologia' },
   ];
 }
