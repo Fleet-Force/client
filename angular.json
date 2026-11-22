@@ -39,7 +39,7 @@
           "configurations": {
             "production": {
               "define": {
-                "API_URL": "'https://fleet-force-api.joaopdias.dev'"
+                "API_URL": "'https://fleet-force-api.joaopdias.dev.br'"
               },
               "budgets": [
                 {
